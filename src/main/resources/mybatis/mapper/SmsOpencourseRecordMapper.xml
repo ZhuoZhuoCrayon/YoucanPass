@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crayon.youcanpass.mapper.SmsOpencourseRecordMapper">
+  <resultMap id="BaseResultMap" type="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_opencource_id" jdbcType="BIGINT" property="userOpencourceId" />
+    <result column="course_date" jdbcType="DATE" property="courseDate" />
+    <result column="course_time" jdbcType="REAL" property="courseTime" />
+    <result column="commit_date" jdbcType="TIMESTAMP" property="commitDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    <result column="note" jdbcType="LONGVARCHAR" property="note" />
+    <result column="status_comment" jdbcType="LONGVARCHAR" property="statusComment" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_opencource_id, course_date, course_time, commit_date, status
+  </sql>
+  <sql id="Blob_Column_List">
+    note, status_comment
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecordExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sms_opencourse_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sms_opencourse_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sms_opencourse_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sms_opencourse_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecordExample">
+    delete from sms_opencourse_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sms_opencourse_record (user_opencource_id, course_date, course_time, 
+      commit_date, status, note, 
+      status_comment)
+    values (#{userOpencourceId,jdbcType=BIGINT}, #{courseDate,jdbcType=DATE}, #{courseTime,jdbcType=REAL}, 
+      #{commitDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{note,jdbcType=LONGVARCHAR}, 
+      #{statusComment,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sms_opencourse_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userOpencourceId != null">
+        user_opencource_id,
+      </if>
+      <if test="courseDate != null">
+        course_date,
+      </if>
+      <if test="courseTime != null">
+        course_time,
+      </if>
+      <if test="commitDate != null">
+        commit_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="statusComment != null">
+        status_comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userOpencourceId != null">
+        #{userOpencourceId,jdbcType=BIGINT},
+      </if>
+      <if test="courseDate != null">
+        #{courseDate,jdbcType=DATE},
+      </if>
+      <if test="courseTime != null">
+        #{courseTime,jdbcType=REAL},
+      </if>
+      <if test="commitDate != null">
+        #{commitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="statusComment != null">
+        #{statusComment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecordExample" resultType="java.lang.Integer">
+    select count(*) from sms_opencourse_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sms_opencourse_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userOpencourceId != null">
+        user_opencource_id = #{record.userOpencourceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.courseDate != null">
+        course_date = #{record.courseDate,jdbcType=DATE},
+      </if>
+      <if test="record.courseTime != null">
+        course_time = #{record.courseTime,jdbcType=REAL},
+      </if>
+      <if test="record.commitDate != null">
+        commit_date = #{record.commitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.statusComment != null">
+        status_comment = #{record.statusComment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sms_opencourse_record
+    set id = #{record.id,jdbcType=BIGINT},
+      user_opencource_id = #{record.userOpencourceId,jdbcType=BIGINT},
+      course_date = #{record.courseDate,jdbcType=DATE},
+      course_time = #{record.courseTime,jdbcType=REAL},
+      commit_date = #{record.commitDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      note = #{record.note,jdbcType=LONGVARCHAR},
+      status_comment = #{record.statusComment,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sms_opencourse_record
+    set id = #{record.id,jdbcType=BIGINT},
+      user_opencource_id = #{record.userOpencourceId,jdbcType=BIGINT},
+      course_date = #{record.courseDate,jdbcType=DATE},
+      course_time = #{record.courseTime,jdbcType=REAL},
+      commit_date = #{record.commitDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    update sms_opencourse_record
+    <set>
+      <if test="userOpencourceId != null">
+        user_opencource_id = #{userOpencourceId,jdbcType=BIGINT},
+      </if>
+      <if test="courseDate != null">
+        course_date = #{courseDate,jdbcType=DATE},
+      </if>
+      <if test="courseTime != null">
+        course_time = #{courseTime,jdbcType=REAL},
+      </if>
+      <if test="commitDate != null">
+        commit_date = #{commitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="statusComment != null">
+        status_comment = #{statusComment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    update sms_opencourse_record
+    set user_opencource_id = #{userOpencourceId,jdbcType=BIGINT},
+      course_date = #{courseDate,jdbcType=DATE},
+      course_time = #{courseTime,jdbcType=REAL},
+      commit_date = #{commitDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      note = #{note,jdbcType=LONGVARCHAR},
+      status_comment = #{statusComment,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crayon.youcanpass.model.SmsOpencourseRecord">
+    update sms_opencourse_record
+    set user_opencource_id = #{userOpencourceId,jdbcType=BIGINT},
+      course_date = #{courseDate,jdbcType=DATE},
+      course_time = #{courseTime,jdbcType=REAL},
+      commit_date = #{commitDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
