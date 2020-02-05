@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @Classname CmsCourseService
- * @Description TODO
+ * @Description 课程管理Service层
  * @Date 2020/2/5 20:16
  * @Created by Crayon
  */

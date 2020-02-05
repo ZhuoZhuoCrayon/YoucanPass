@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @Classname CmsCourseServiceImpl
- * @Description TODO
+ * @Description 课程管理Service接口实现层
  * @Date 2020/2/5 20:19
  * @Created by Crayon
  */
