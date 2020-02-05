@@ -12,11 +12,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 用户管理控制层
+ * Created by crayon on 2020/02/05
+ */
 @Api(tags = "UmsUserController", description = "用户管理")
 @RestController
 @RequestMapping("/ums/user")
@@ -31,7 +35,7 @@ public class UmsUserController {
 
     @ApiOperation("用户登录:成功返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public CommonResult login(@RequestBody UmsUserLoginParam userLoginParam, BindingResult result){
+    public CommonResult login(@RequestBody @Valid UmsUserLoginParam userLoginParam){
         String token = userService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if(token == null){
             return CommonResult.failed("用户名密码错误");
