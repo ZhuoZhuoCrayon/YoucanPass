@@ -1,7 +1,10 @@
 package com.crayon.youcanpass.service.impl;
 
 import com.crayon.youcanpass.common.utils.JwtTokenUtil;
+import com.crayon.youcanpass.component.SecurityUserHelper;
+import com.crayon.youcanpass.dao.ImsDepartmentDao;
 import com.crayon.youcanpass.dao.UmsUserRoleRelationDao;
+import com.crayon.youcanpass.dto.UmsUserDetailDto;
 import com.crayon.youcanpass.mapper.UmsUserMapper;
 import com.crayon.youcanpass.model.UmsPermission;
 import com.crayon.youcanpass.model.UmsUser;
@@ -36,6 +39,8 @@ public class UmsUserServiceImpl implements UmsUserService {
     private UmsUserMapper userMapper;
     @Autowired
     private UmsUserRoleRelationDao userRoleRelationDao;
+    @Autowired
+    private ImsDepartmentDao imsDepartmentDao;
 
     @Value("${jwt.tokenHead}")
     private String tokenHead;
@@ -49,6 +54,18 @@ public class UmsUserServiceImpl implements UmsUserService {
             return userList.get(0);
         }
         return null;
+    }
+
+    @Override
+    public UmsUserDetailDto getUserLoginInfo() {
+        UmsUserDetailDto userDetailDto = new UmsUserDetailDto();
+        //获取当前登陆用户信息
+        UmsUser user = this.getUserByUserName(SecurityUserHelper.getLoginUserName());
+        userDetailDto.setUsername(user.getUsername());
+        userDetailDto.setRealName(user.getRealName());
+        userDetailDto.setDepartmentChains(imsDepartmentDao.getDepartmentRoot(user.getDepartmentId()));
+        userDetailDto.setRoleNames(userRoleRelationDao.listRoleNameByUserId(user.getId()));
+        return userDetailDto;
     }
 
     @Override

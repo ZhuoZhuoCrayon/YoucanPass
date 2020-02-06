@@ -1,4 +1,5 @@
 package com.crayon.youcanpass.service;
+import com.crayon.youcanpass.dto.UmsUserDetailDto;
 import com.crayon.youcanpass.model.UmsPermission;
 import com.crayon.youcanpass.model.UmsUser;
 
@@ -10,6 +11,11 @@ public interface UmsUserService {
      * 根据用户名获取用户
      */
     UmsUser getUserByUserName(String username);
+
+    /**
+     * 获取用户登录信息
+     */
+    UmsUserDetailDto getUserLoginInfo();
 
     /**
      * 登录功能
@@ -32,6 +38,7 @@ public interface UmsUserService {
      * @return 权限信息列表
      */
     List<UmsPermission> listPermissionByUserId(Long userId, Integer permissionType, Integer permissionStatus);
+
 
 
 }

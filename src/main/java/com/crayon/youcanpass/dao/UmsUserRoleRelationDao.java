@@ -17,4 +17,11 @@ public interface UmsUserRoleRelationDao {
     List<UmsPermission> listPermissionsByUserId(@Param("userId") Long userId,
                                                 @Param("type") Integer type,
                                                 @Param("status") Integer status);
+
+    /**
+     * 根据用户id获取用户所属角色名信息
+     * @param userId 用户id
+     * @return 角色名称列表
+     */
+    List<String> listRoleNameByUserId(@Param("userId") Long userId);
 }
