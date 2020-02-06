@@ -1,6 +1,7 @@
 package com.crayon.youcanpass.controller;
 
 import com.crayon.youcanpass.common.api.CommonResult;
+import com.crayon.youcanpass.dto.UmsUserDetailDto;
 import com.crayon.youcanpass.dto.UmsUserLoginParam;
 import com.crayon.youcanpass.model.UmsPermission;
 import com.crayon.youcanpass.model.UmsUser;
@@ -33,6 +34,18 @@ public class UmsUserController {
     private String tokenHead;
 
 
+    @ApiOperation("获取指定id用户的权限信息:前期接口测试")
+    @RequestMapping(value = "/{id}/permissions", method = RequestMethod.GET)
+    public CommonResult<List<UmsPermission>> list(@PathVariable("id") Long id){
+        return CommonResult.success(userService.listPermissionByUserId(id, 2, 1));
+    }
+
+    @ApiOperation("获取用户登录信息")
+    @RequestMapping(value = "/login-info", method = RequestMethod.GET)
+    public CommonResult<UmsUserDetailDto> getUserLoginInfo(){
+        return CommonResult.success(userService.getUserLoginInfo());
+    }
+
     @ApiOperation("用户登录:成功返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public CommonResult login(@RequestBody @Valid UmsUserLoginParam userLoginParam){
@@ -60,9 +73,4 @@ public class UmsUserController {
         return commonResult;
     }
 
-    @ApiOperation("获取指定id用户的权限信息:前期接口测试")
-    @RequestMapping(value = "/{id}/permissions", method = RequestMethod.GET)
-    public CommonResult<List<UmsPermission>> list(@PathVariable("id") Long id){
-        return CommonResult.success(userService.listPermissionByUserId(id, 2, 1));
-    }
 }
