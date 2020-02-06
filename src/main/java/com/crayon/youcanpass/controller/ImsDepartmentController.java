@@ -2,6 +2,7 @@ package com.crayon.youcanpass.controller;
 
 import com.crayon.youcanpass.common.api.CommonPage;
 import com.crayon.youcanpass.common.api.CommonResult;
+import com.crayon.youcanpass.dto.ImsDepartmentTreeNode;
 import com.crayon.youcanpass.model.ImsDepartment;
 import com.crayon.youcanpass.service.ImsDepartmentService;
 import io.swagger.annotations.Api;
@@ -46,6 +47,21 @@ public class ImsDepartmentController {
     public CommonResult<List<ImsDepartment>> list(){
         return CommonResult.success(departmentService.list());
     }
+
+    @ApiOperation("获取指定部门id所属层次信息:向上查找")
+    @RequestMapping(value = "/{id}/root", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ims:department:read')")
+    public CommonResult<ImsDepartmentTreeNode> getDepartmentRoot(@PathVariable("id") Long id){
+        return CommonResult.success(departmentService.getDepartmentRoot(id));
+    }
+
+    @ApiOperation("获取指定部门id下属部门信息:向下查找")
+    @RequestMapping(value = "/{id}/structure", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ims:department:read')")
+    public CommonResult<List<ImsDepartmentTreeNode>> listDepartmentStructure(@PathVariable("id") Long id){
+        return CommonResult.success(departmentService.listDepartmentStructure(id));
+    }
+
 
     @ApiOperation("添加部门信息")
     @PreAuthorize("hasAuthority('ims:department:insert')")

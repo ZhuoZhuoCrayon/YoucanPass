@@ -1,5 +1,7 @@
 package com.crayon.youcanpass.service.impl;
 
+import com.crayon.youcanpass.dao.ImsDepartmentDao;
+import com.crayon.youcanpass.dto.ImsDepartmentTreeNode;
 import com.crayon.youcanpass.mapper.ImsDepartmentMapper;
 import com.crayon.youcanpass.model.ImsDepartment;
 import com.crayon.youcanpass.model.ImsDepartmentExample;
@@ -20,11 +22,23 @@ import java.util.List;
 public class ImsDepartmentServiceImpl implements ImsDepartmentService {
     @Autowired
     private ImsDepartmentMapper departmentMapper;
+    @Autowired
+    private ImsDepartmentDao departmentDao;
 
     @Override
     public List<ImsDepartment> listByPage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return departmentMapper.selectByExample(new ImsDepartmentExample());
+    }
+
+    @Override
+    public ImsDepartmentTreeNode getDepartmentRoot(Long id) {
+        return departmentDao.getDepartmentRoot(id);
+    }
+
+    @Override
+    public List<ImsDepartmentTreeNode> listDepartmentStructure(Long id) {
+        return departmentDao.listDepartmentStructure(id);
     }
 
     @Override

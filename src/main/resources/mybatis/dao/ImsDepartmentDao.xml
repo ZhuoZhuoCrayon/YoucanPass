@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crayon.youcanpass.dao.ImsDepartmentDao">
+    <!--向上查找-->
+    <resultMap id="departmentTreeNode_up" type="com.crayon.youcanpass.dto.ImsDepartmentTreeNode">
+        <id column="id" property="id"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <collection property="departmentChildList" column="department_id" select="getDepartmentRoot"
+                    ofType="com.crayon.youcanpass.dto.ImsDepartmentTreeNode">
+        </collection>
+    </resultMap>
+
+    <!--向下查找-->
+    <resultMap id="departmentTreeNode_down" type="com.crayon.youcanpass.dto.ImsDepartmentTreeNode">
+        <id column="id" property="id"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <collection property="departmentChildList" column="id" select="listDepartmentStructure"
+                    ofType="com.crayon.youcanpass.dto.ImsDepartmentTreeNode">
+        </collection>
+    </resultMap>
+    <select id="getDepartmentRoot" resultMap="departmentTreeNode_up">
+        select * from ims_department
+        where id = #{id};
+    </select>
+
+    <select id="listDepartmentStructure" resultMap="departmentTreeNode_down">
+        select * from ims_department
+        where department_id = #{id};
+    </select>
+</mapper>
