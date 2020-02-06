@@ -1,12 +1,17 @@
 package com.crayon.youcanpass.common.api;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 通用返回对象
  * Create by crayon on 2020/02/02
  */
 public class CommonResult<T> {
+    @ApiModelProperty(value = "响应码")
     private Long code;
+    @ApiModelProperty(value = "提示信息")
     private String message;
+    @ApiModelProperty(value = "返回的数据")
     private T data;
 
     protected CommonResult() {
