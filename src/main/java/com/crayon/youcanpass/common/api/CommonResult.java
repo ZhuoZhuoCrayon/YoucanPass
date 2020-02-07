@@ -94,6 +94,13 @@ public class CommonResult<T> {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
 
+    /**
+     * 错误返回结果
+     */
+    public static <T> CommonResult<T> error(Long code, String message){
+        return new CommonResult<T>(code, message, null);
+    }
+
     public Long getCode() {
         return code;
     }

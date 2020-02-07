@@ -16,14 +16,25 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionInterceptor {
+    //处理参数校验异常
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public CommonResult methodArgumentNotValidExceptionHandler(HttpServletRequest request,
+                                                               MethodArgumentNotValidException e){
+        return CommonResult.validateFailed(e.getBindingResult().getFieldError().getDefaultMessage());
+    }
+
+    //处理业务层异常
+    @ExceptionHandler(value = ServiceException.class)
+    public CommonResult serviceExceptionHandler(HttpServletRequest request,
+                                                ServiceException serviceException){
+        return CommonResult.error(serviceException.getCode(), serviceException.getMessage());
+    }
+
+    //处理其他异常
     @ExceptionHandler(value = Exception.class)
     public CommonResult exceptionHandler(HttpServletRequest request, Exception e){
-        CommonResult result;
-        if(e instanceof MethodArgumentNotValidException){
-            result = CommonResult.validateFailed(((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage());
-        }else{
-            result = CommonResult.failed(e.getMessage());
-        }
-        return result;
+        return CommonResult.failed(e.getMessage());
     }
+
+
 }
