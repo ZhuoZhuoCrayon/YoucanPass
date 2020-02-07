@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,7 +32,7 @@ public class CmsCourseController {
 
     @ApiOperation("获取指定id课程信息")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('cms:course:read')")
+    @PreAuthorize("hasAuthority('cms:course:id')")
     public CommonResult<CmsCourse> get(
             @PathVariable("id")
             @NotNull(message = "查询课程id不能为空")
@@ -43,7 +42,7 @@ public class CmsCourseController {
 
     @ApiOperation("分页查询课程信息")
     @RequestMapping(value = "/list/page", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('cms:course:read')")
+    @PreAuthorize("hasAuthority('cms:course:list:page')")
     public CommonResult<CommonPage<CmsCourse>> listByPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                               @RequestParam(value = "pageSize", defaultValue = "3") Integer pageSize){
         List<CmsCourse> courseList = courseService.listByPage(pageNum, pageSize);
@@ -52,14 +51,14 @@ public class CmsCourseController {
 
     @ApiOperation("获取所有课程信息")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('cms:course:read')")
+    @PreAuthorize("hasAuthority('cms:course:list')")
     public CommonResult<List<CmsCourse>> list(){
         return CommonResult.success(courseService.list());
     }
 
     @ApiOperation("添加课程信息")
-    @PreAuthorize("hasAuthority('cms:course:insert')")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('cms:course:insert')")
     public CommonResult insert(@RequestBody @Valid CmsCourse course){
         CommonResult commonResult;
         int count = courseService.insert(course);
@@ -72,8 +71,8 @@ public class CmsCourseController {
     }
 
     @ApiOperation("更新指定id课程信息")
-    @PreAuthorize("hasAuthority('cms:course:update')")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('cms:course:update:id')")
     public CommonResult update(
             @PathVariable("id")
             @NotNull(message = "课程id不能为空")
@@ -90,8 +89,8 @@ public class CmsCourseController {
     }
 
     @ApiOperation("删除指定id课程信息")
-    @PreAuthorize("hasAuthority('cms:course:delete')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('cms:course:delete:id')")
     public CommonResult delete(
             @PathVariable("id")
             @NotNull(message = "课程id不能为空")
@@ -107,8 +106,8 @@ public class CmsCourseController {
     }
 
     @ApiOperation("批量更新课程启用状态")
-    @PreAuthorize("hasAuthority('cms:course:update')")
     @RequestMapping(value = "/update/status/batch", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('cms:course:update:status:batch')")
     public CommonResult updateStatusBatch(
             @RequestParam @NotNull(message = "课程id列表不能为空") List<Long> ids,
             @RequestParam @NotNull(message = "启用状态不得为空")
@@ -124,8 +123,8 @@ public class CmsCourseController {
     }
 
     @ApiOperation("批量更新课程学期信息")
-    @PreAuthorize("hasAuthority('cms:course:update')")
     @RequestMapping(value = "/update/term/batch", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('cms:course:update:term:batch')")
     public CommonResult updateTermBatch(
             @RequestParam @NotNull(message = "课程id列表不能为空") List<Long> ids,
             @NotNull(message = "开课学期不得为空")
@@ -141,8 +140,8 @@ public class CmsCourseController {
     }
 
     @ApiOperation("批量更新课程类型")
-    @PreAuthorize("hasAuthority('cms:course:update')")
     @RequestMapping(value = "/update/type/batch", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('cms:course:update:type:batch')")
     public CommonResult updateTypeBatch(
             @RequestParam @NotNull(message = "课程id列表不能为空") List<Long> ids,
             @NotNull(message = "课程类型不得为空")

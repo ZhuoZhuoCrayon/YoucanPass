@@ -27,14 +27,14 @@ public class ImsDepartmentController {
 
     @ApiOperation("获取指定id部门信息")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:department:read')")
+    @PreAuthorize("hasAuthority('ims:department:id')")
     public CommonResult<ImsDepartment> get(@PathVariable("id") Long id){
         return CommonResult.success(departmentService.get(id));
     }
 
     @ApiOperation("分页查询部门信息")
     @RequestMapping(value = "/list/page", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:department:read')")
+    @PreAuthorize("hasAuthority('ims:department:list:page')")
     public CommonResult<CommonPage<ImsDepartment>> listByPage(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                               @RequestParam(value = "pageSize", defaultValue = "3") Integer pageSize){
         List<ImsDepartment> departmentList = departmentService.listByPage(pageNum, pageSize);
@@ -43,29 +43,29 @@ public class ImsDepartmentController {
 
     @ApiOperation("获取所有部门信息")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:department:read')")
+    @PreAuthorize("hasAuthority('ims:department:list')")
     public CommonResult<List<ImsDepartment>> list(){
         return CommonResult.success(departmentService.list());
     }
 
     @ApiOperation("获取指定部门id所属层次信息:向上查找")
     @RequestMapping(value = "/{id}/root", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:department:read')")
+    @PreAuthorize("hasAuthority('ims:department:id:root')")
     public CommonResult<ImsDepartmentTreeNode> getDepartmentRoot(@PathVariable("id") Long id){
         return CommonResult.success(departmentService.getDepartmentRoot(id));
     }
 
     @ApiOperation("获取指定部门id下属部门信息:向下查找")
     @RequestMapping(value = "/{id}/structure", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:department:read')")
+    @PreAuthorize("hasAuthority('ims:department:id:structure')")
     public CommonResult<List<ImsDepartmentTreeNode>> listDepartmentStructure(@PathVariable("id") Long id){
         return CommonResult.success(departmentService.listDepartmentStructure(id));
     }
 
 
     @ApiOperation("添加部门信息")
-    @PreAuthorize("hasAuthority('ims:department:insert')")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ims:department:insert')")
     public CommonResult insert(@RequestBody ImsDepartment department){
         CommonResult commonResult;
         int count = departmentService.insert(department);
@@ -78,8 +78,8 @@ public class ImsDepartmentController {
     }
 
     @ApiOperation("更新指定id部门信息")
-    @PreAuthorize("hasAuthority('ims:department:update')")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ims:department:update:id')")
     public CommonResult update(@PathVariable("id") Long id,
                                @RequestBody ImsDepartment department){
         CommonResult commonResult;
@@ -93,8 +93,8 @@ public class ImsDepartmentController {
     }
 
     @ApiOperation("删除指定id部门信息")
-    @PreAuthorize("hasAuthority('ims:department:delete')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ims:department:delete:id')")
     public CommonResult delete(@PathVariable("id") Long id){
         CommonResult commonResult;
         int count = departmentService.delete(id);

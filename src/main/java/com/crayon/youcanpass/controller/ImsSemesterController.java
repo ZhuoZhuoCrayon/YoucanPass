@@ -34,7 +34,7 @@ public class ImsSemesterController {
 
     @ApiOperation("获取指定id学期信息")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:semester:read')")
+    @PreAuthorize("hasAuthority('ims:semester:id')")
     public CommonResult<ImsSemester> get(
             @PathVariable("id")
             @NotNull(message = "查询学期id不能为空")
@@ -44,14 +44,14 @@ public class ImsSemesterController {
 
     @ApiOperation("获取全部学期信息")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:semester:read')")
+    @PreAuthorize("hasAuthority('ims:semester:list')")
     public CommonResult<List<ImsSemester>> list(){
         return CommonResult.success(semesterService.list());
     }
 
     @ApiOperation("按年度范围获取学期信息")
     @RequestMapping(value = "/list/range", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:semester:read')")
+    @PreAuthorize("hasAuthority('ims:semester:list:range')")
     public CommonResult<List<ImsSemester>> listByTimeRange(
             @RequestParam(value = "begin")
             @NotNull(message = "起始年份不能为空")
@@ -84,7 +84,7 @@ public class ImsSemesterController {
 
     @ApiOperation("更新指定id学期信息")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ims:semester:update')")
+    @PreAuthorize("hasAuthority('ims:semester:update:id')")
     public CommonResult update(
             @PathVariable("id")
             @NotNull(message = "学期id不能为空")
@@ -102,7 +102,7 @@ public class ImsSemesterController {
 
     @ApiOperation("删除指定id学期信息")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ims:semester:delete')")
+    @PreAuthorize("hasAuthority('ims:semester:delete:id')")
     public CommonResult delete(
             @PathVariable("id")
             @NotNull(message = "学期id不能为空")
