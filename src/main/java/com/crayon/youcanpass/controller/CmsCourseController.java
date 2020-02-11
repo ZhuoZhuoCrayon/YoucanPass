@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ import java.util.List;
 @Api(tags = "CmsCourseController", description = "课程信息管理")
 @RestController
 @RequestMapping("/cms/course")
+@Validated
 public class CmsCourseController {
     @Autowired
     private CmsCourseService courseService;
