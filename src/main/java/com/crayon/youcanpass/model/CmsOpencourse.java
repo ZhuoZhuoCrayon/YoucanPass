@@ -13,7 +13,7 @@ public class CmsOpencourse implements Serializable {
     @ApiModelProperty(value = "课程id:关联 cms_course")
     private Long courseId;
 
-    @ApiModelProperty(value = "学期信息id:关联cims_semester")
+    @ApiModelProperty(value = "学期信息id:关联ims_semester")
     private Long semesterId;
 
     @ApiModelProperty(value = "课程人数限制")
