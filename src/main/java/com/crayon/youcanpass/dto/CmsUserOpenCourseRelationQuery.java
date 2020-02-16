@@ -21,6 +21,12 @@ public class CmsUserOpenCourseRelationQuery {
     @ApiModelProperty(value = "开课信息id:关联cms_opencourse")
     private Long opencourseId;
 
+    @ApiModelProperty(value = "课程名")
+    private String courseName;
+
+    @ApiModelProperty(value = "课程id")
+    private Long courseId;
+
     @ApiModelProperty(value = "学号/教工号")
     private String username;
 

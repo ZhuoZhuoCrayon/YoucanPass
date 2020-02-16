@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crayon.youcanpass.dao.CmsOpenCourseRelationDao">
+    <resultMap id="CmsUserOpenCourseRelationDto" type="com.crayon.youcanpass.dto.CmsUserOpenCourseRelationDto">
+        <id column="id" property="id"/>
+        <result column="opencourseId" property="opencourseId"/>
+        <result column="courseName" property="courseName"/>
+        <result column="courseId" property="courseId"/>
+        <result column="username" property="username"/>
+        <result column="realName" property="realName"/>
+        <result column="status" property="status"/>
+        <result column="semesterDescription" property="semesterDescription"/>
+        <result column="statusComment" property="statusComment"/>
+    </resultMap>
+    <select id="listOpenCoursesByQuery" resultMap="CmsUserOpenCourseRelationDto">
+        select
+        cuor.id id,
+        cuor.opencourse_id opencourseId,
+        cc.name courseName
+        cc.id courseId
+        uu.username username,
+        uu.real_name realName,
+        cuor.status status,
+        i.description semesterDescription,
+        cuor.status_comment statusComment
+        from cms_user_opencourse_relation cuor
+        left join ums_user uu on cuor.user_id = uu.id
+        left join cms_opencourse co on cuor.opencourse_id = co.id
+        left join cms_course cc on co.course_id = cc.id
+        left join ims_semester i on co.semester_id = i.id
+        where 1=1
+        <if test="query.id != null">
+            and cuor.id = #{query.id}
+        </if>
+        <if test="query.opencourseId != null">
+            and cuor.opencourse_id = #{query.query.opencourseId}
+        </if>
+        <if test="query.courseName != null and query.courseName != ''">
+            and cc.name like concat("%", #{courseName}, "%")
+        </if>
+        <if test="query.courseId != null">
+            and cc.id = #{query.courseId}
+        </if>
+        <if test="query.username != null and query.username != ''">
+            and uu.username like concat("%", #{query.username}, "%")
+        </if>
+        <if test="query.realName != null and query.realName != ''">
+            and uu.real_name like concat("%", #{query.realName}, "%")
+        </if>
+        <if test="query.status != null">
+            and cuor.status = #{query.status}
+        </if>
+        <if test="query.semesterDescription != null">
+            and i.description like concat("%", #{query.semesterDescription}, "%")
+        </if>
+    </select>
+</mapper>
