@@ -21,6 +21,11 @@ public interface CmsOpenCourseService {
     void checkParam(CmsOpenCourseForUserParam openCourseForUserParam);
 
     /**
+     * 根据id获取开课信息
+     */
+    CmsOpencourse get(Long id);
+
+    /**
      * 分页按条件查询概要开课信息
      */
     List<CmsOpenCourseSimpleDto> listOpenCourseSimpleByQuery(CmsOpenCourseQuery openCourseQuery, Integer pageNum, Integer pageSize);

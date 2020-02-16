@@ -56,6 +56,11 @@ public class CmsOpenCourseServiceImpl implements CmsOpenCourseService {
     }
 
     @Override
+    public CmsOpencourse get(Long id) {
+        return opencourseMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<CmsOpenCourseSimpleDto> listOpenCourseSimpleByQuery(CmsOpenCourseQuery openCourseQuery,
                                                                     Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
