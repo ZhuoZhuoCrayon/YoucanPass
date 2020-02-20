@@ -12,12 +12,12 @@
         <result column="semesterDescription" property="semesterDescription"/>
         <result column="statusComment" property="statusComment"/>
     </resultMap>
-    <select id="listOpenCoursesByQuery" resultMap="CmsUserOpenCourseRelationDto">
+    <select id="listCmsUserOpenCourseRelationDtoByQuery" resultMap="CmsUserOpenCourseRelationDto">
         select
         cuor.id id,
         cuor.opencourse_id opencourseId,
-        cc.name courseName
-        cc.id courseId
+        cc.name courseName,
+        cc.id courseId,
         uu.username username,
         uu.real_name realName,
         cuor.status status,
