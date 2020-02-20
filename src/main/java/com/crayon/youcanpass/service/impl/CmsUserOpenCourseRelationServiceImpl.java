@@ -65,7 +65,18 @@ public class CmsUserOpenCourseRelationServiceImpl implements CmsUserOpenCourseRe
         List<CmsUserOpenCourseRelationDto> selectCourseList =
                 courseRelationDao.listCmsUserOpenCourseRelationDtoByQuery(userOpenCourseRelationQuery);
         for(CmsUserOpenCourseRelationDto relation : selectCourseList){
-            if(relation.getStatus() != -1) throw ServiceException.forbidden("已选择[" + relation.getCourseName() + "]的其他课程");
+            if(relation.getStatus() != CmsUserOpenCourseRelationConstant.FAILED_AUDIT){
+                if(relation.getOpencourseId().equals(opencourseId)){
+                    throw ServiceException.forbidden("不能重复选择同一门课");
+                }else {
+                    throw ServiceException.forbidden("已选择[" + relation.getCourseName() + "]的其他课程");
+                }
+            }else{
+                //已选择了这门课但审核不通过：禁止学生再次选择该课程
+                if(relation.getOpencourseId().equals(opencourseId)){
+                    throw ServiceException.forbidden("已选择该课程但审核不通过，请选择其他课程");
+                }
+            }
         }
 
         //选课人数+1
