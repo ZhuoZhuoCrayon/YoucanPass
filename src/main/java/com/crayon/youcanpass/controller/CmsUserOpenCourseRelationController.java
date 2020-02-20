@@ -42,7 +42,7 @@ public class CmsUserOpenCourseRelationController {
     @Autowired
     private UmsUserService umsUserService;
 
-    @ApiOperation("分页获取选课信息")
+    @ApiOperation("分页获取选课信息:管理员")
     @RequestMapping(value = "/list/page/simple", method = RequestMethod.GET)
     //@PreAuthorize("hasAuthority('cms:user-opencourse-relation:page:list:simple')")
     public CommonResult<CommonPage<CmsUserOpenCourseRelationDto>> listByPageQuery(
@@ -134,6 +134,9 @@ public class CmsUserOpenCourseRelationController {
             if(userOpencourseRelation == null || opencourse == null || userId != opencourse.getUserId()){
                 return CommonResult.failed("选课信息不存在或系统禁止非法操作");
             }
+            if(userOpencourseRelation.getStatus() != CmsUserOpenCourseRelationConstant.WAITING_TEACHER_CONFIRM){
+                return CommonResult.failed("id:[ + " + userOpencourseRelation.getId() + "] 不在讲师确认阶段");
+            }
         }
         int count = userOpenCourseRelationService.updateStatusBatch(
                 ids, CmsUserOpenCourseRelationConstant.WAITING_STUDENT_CONFIRM, statusComment);
@@ -158,6 +161,9 @@ public class CmsUserOpenCourseRelationController {
             //用户不是选课用户
             if(userOpencourseRelation == null || userId != userOpencourseRelation.getUserId()){
                 return CommonResult.failed("选课信息不存在或系统禁止非法操作");
+            }
+            if(userOpencourseRelation.getStatus() != CmsUserOpenCourseRelationConstant.WAITING_STUDENT_CONFIRM){
+                return CommonResult.failed("id:[" + userOpencourseRelation.getId() + "]不在学生确认阶段");
             }
         }
         int count = userOpenCourseRelationService.updateStatusBatch(
