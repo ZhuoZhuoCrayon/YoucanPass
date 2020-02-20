@@ -35,8 +35,8 @@ public class CmsOpenCourseController {
     private CmsOpenCourseService openCourseService;
 
     @ApiOperation("分页获取开课信息概要信息列表")
-    @RequestMapping(value = "/list/simple", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('cms:opencourse:list:simple')")
+    @RequestMapping(value = "/list/page/simple", method = RequestMethod.GET)
+    //@PreAuthorize("hasAuthority('cms:opencourse:list:page:simple')")
     public CommonResult<CommonPage<CmsOpenCourseSimpleDto>>
     listOpenCourseSimpleByQuery(CmsOpenCourseQuery openCourseQuery,
                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -48,7 +48,7 @@ public class CmsOpenCourseController {
 
     @ApiOperation("新增开课信息：面向开课用户")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('cms:opencourse:insert')")
+    //@PreAuthorize("hasAuthority('cms:opencourse:insert')")
     public CommonResult insertByLoginUser(@RequestBody @Valid CmsOpenCourseForUserParam openCourseForUserParam){
         int count = openCourseService.insertByLoginUser(openCourseForUserParam);
         CommonResult commonResult;
@@ -62,7 +62,7 @@ public class CmsOpenCourseController {
 
     @ApiOperation("删除开课信息")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('cms:opencourse:delete:id')")
+    //@PreAuthorize("hasAuthority('cms:opencourse:delete:id')")
     public CommonResult delete(
             @PathVariable("id")
             @NotNull(message = "开课信息id不能为空")
@@ -78,7 +78,7 @@ public class CmsOpenCourseController {
     }
     @ApiOperation("批量删除开课信息")
     @RequestMapping(value = "/delete/batch", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('cms:opencourse:delete:batch')")
+    //@PreAuthorize("hasAuthority('cms:opencourse:delete:batch')")
     public CommonResult deleteBatch(@RequestParam @NotNull(message = "课程id列表不能为空") List<Long> ids){
         int count = openCourseService.deleteBatch(ids);
         CommonResult commonResult;
@@ -92,7 +92,7 @@ public class CmsOpenCourseController {
 
     @ApiOperation("更新开课信息")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('cms:opencourse:update:id')")
+    //@PreAuthorize("hasAuthority('cms:opencourse:update:id')")
     public CommonResult update(
             @PathVariable("id")
             @NotNull(message = "开课信息id不能为空")
@@ -110,11 +110,11 @@ public class CmsOpenCourseController {
 
     @ApiOperation("批量更新开课信息状态")
     @RequestMapping(value = "/update/status/batch", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('cms:opencourse:update:status:batch')")
+    //@PreAuthorize("hasAuthority('cms:opencourse:update:status:batch')")
     public CommonResult updateStatusBatch(
             @RequestParam @NotNull(message = "开课信息id列表不能为空") List<Long> ids,
             @RequestParam @NotNull(message = "开课状态不得为空")
-            @Range(min = 0, max = 1, message = "审核状态:-1->未通过审核/0->待审核/1->审核通过（可选）/2->不可选/3->过期不可选") Integer status,
+            @Range(min = 0, max = 3, message = "审核状态:-1->未通过审核/0->待审核/1->审核通过（可选）/2->不可选/3->过期不可选") Integer status,
             @RequestParam String statusComment){
         int count = openCourseService.updateStatusBatch(ids, status, statusComment);
         CommonResult commonResult;
