@@ -108,7 +108,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -129,12 +129,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cms_user_opencourse_relation (user_id, opencourse_id, evaluation_level, 
-      file_url, status, evaluation_text, 
-      status_comment)
-    values (#{userId,jdbcType=BIGINT}, #{opencourseId,jdbcType=BIGINT}, #{evaluationLevel,jdbcType=INTEGER}, 
-      #{fileUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{evaluationText,jdbcType=LONGVARCHAR}, 
-      #{statusComment,jdbcType=LONGVARCHAR})
+    insert into cms_user_opencourse_relation (user_id, opencourse_id, evaluation_level,
+    file_url, status, evaluation_text,
+    status_comment)
+    values (#{userId,jdbcType=BIGINT}, #{opencourseId,jdbcType=BIGINT}, #{evaluationLevel,jdbcType=INTEGER},
+    #{fileUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{evaluationText,jdbcType=LONGVARCHAR},
+    #{statusComment,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.crayon.youcanpass.model.CmsUserOpencourseRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -229,13 +229,13 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update cms_user_opencourse_relation
     set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      opencourse_id = #{record.opencourseId,jdbcType=BIGINT},
-      evaluation_level = #{record.evaluationLevel,jdbcType=INTEGER},
-      file_url = #{record.fileUrl,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
-      evaluation_text = #{record.evaluationText,jdbcType=LONGVARCHAR},
-      status_comment = #{record.statusComment,jdbcType=LONGVARCHAR}
+    user_id = #{record.userId,jdbcType=BIGINT},
+    opencourse_id = #{record.opencourseId,jdbcType=BIGINT},
+    evaluation_level = #{record.evaluationLevel,jdbcType=INTEGER},
+    file_url = #{record.fileUrl,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER},
+    evaluation_text = #{record.evaluationText,jdbcType=LONGVARCHAR},
+    status_comment = #{record.statusComment,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -243,11 +243,11 @@
   <update id="updateByExample" parameterType="map">
     update cms_user_opencourse_relation
     set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      opencourse_id = #{record.opencourseId,jdbcType=BIGINT},
-      evaluation_level = #{record.evaluationLevel,jdbcType=INTEGER},
-      file_url = #{record.fileUrl,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER}
+    user_id = #{record.userId,jdbcType=BIGINT},
+    opencourse_id = #{record.opencourseId,jdbcType=BIGINT},
+    evaluation_level = #{record.evaluationLevel,jdbcType=INTEGER},
+    file_url = #{record.fileUrl,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
