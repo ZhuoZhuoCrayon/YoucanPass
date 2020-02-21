@@ -4,6 +4,7 @@
     <resultMap id="CmsUserOpenCourseRelationDto" type="com.crayon.youcanpass.dto.CmsUserOpenCourseRelationDto">
         <id column="id" property="id"/>
         <result column="opencourseId" property="opencourseId"/>
+        <result column="openName" property="openName"/>
         <result column="courseName" property="courseName"/>
         <result column="courseId" property="courseId"/>
         <result column="username" property="username"/>
@@ -16,6 +17,7 @@
         select
         cuor.id id,
         cuor.opencourse_id opencourseId,
+        uu1.real_name openName,
         cc.name courseName,
         cc.id courseId,
         uu.username username,
@@ -26,6 +28,7 @@
         from cms_user_opencourse_relation cuor
         left join ums_user uu on cuor.user_id = uu.id
         left join cms_opencourse co on cuor.opencourse_id = co.id
+        left join ums_user uu1 on uu1.id = co.user_id
         left join cms_course cc on co.course_id = cc.id
         left join ims_semester i on co.semester_id = i.id
         where 1=1
@@ -33,10 +36,13 @@
             and cuor.id = #{query.id}
         </if>
         <if test="query.opencourseId != null">
-            and cuor.opencourse_id = #{query.query.opencourseId}
+            and cuor.opencourse_id = #{query.opencourseId}
+        </if>
+        <if test="query.openName != null and query.openName != ''">
+            and uu1.real_name like concat("%", #{query.openName}, "%")
         </if>
         <if test="query.courseName != null and query.courseName != ''">
-            and cc.name like concat("%", #{courseName}, "%")
+            and cc.name like concat("%", #{query.courseName}, "%")
         </if>
         <if test="query.courseId != null">
             and cc.id = #{query.courseId}
