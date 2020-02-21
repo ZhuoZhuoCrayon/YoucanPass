@@ -50,6 +50,11 @@ public class CmsUserOpenCourseRelationServiceImpl implements CmsUserOpenCourseRe
     }
 
     @Override
+    public List<CmsUserOpenCourseRelationDto> listByQuery(CmsUserOpenCourseRelationQuery userOpenCourseRelationQuery) {
+        return courseRelationDao.listCmsUserOpenCourseRelationDtoByQuery(userOpenCourseRelationQuery);
+    }
+
+    @Override
     public int select(Long opencourseId) {
         long userId = umsUserService.getUserByUserName(SecurityUserHelper.getLoginUserName()).getId();
         CmsOpencourse opencourse = opencourseMapper.selectByPrimaryKey(opencourseId);

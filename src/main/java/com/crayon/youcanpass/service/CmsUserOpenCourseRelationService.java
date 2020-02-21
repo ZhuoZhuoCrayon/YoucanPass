@@ -27,6 +27,11 @@ public interface CmsUserOpenCourseRelationService {
                                                        Integer pageNum, Integer pageSize);
 
     /**
+     * 根据查询条件查询全部
+     */
+    List<CmsUserOpenCourseRelationDto> listByQuery(CmsUserOpenCourseRelationQuery userOpenCourseRelationQuery);
+
+    /**
      * 用户选课
      */
     @Transactional

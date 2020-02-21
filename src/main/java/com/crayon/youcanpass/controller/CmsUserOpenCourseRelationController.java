@@ -4,6 +4,7 @@ import com.crayon.youcanpass.common.api.CommonPage;
 import com.crayon.youcanpass.common.api.CommonResult;
 import com.crayon.youcanpass.common.constant.CmsUserOpenCourseRelationConstant;
 import com.crayon.youcanpass.component.SecurityUserHelper;
+import com.crayon.youcanpass.dto.CmsOpenCourseForUserParam;
 import com.crayon.youcanpass.dto.CmsOpenCourseQuery;
 import com.crayon.youcanpass.dto.CmsUserOpenCourseRelationDto;
 import com.crayon.youcanpass.dto.CmsUserOpenCourseRelationQuery;
@@ -44,7 +45,7 @@ public class CmsUserOpenCourseRelationController {
 
     @ApiOperation("分页获取选课信息:管理员")
     @RequestMapping(value = "/list/page/simple", method = RequestMethod.GET)
-    //@PreAuthorize("hasAuthority('cms:user-opencourse-relation:page:list:simple')")
+    //@PreAuthorize("hasAuthority('cms:user-opencourse-relation:list:page:simple')")
     public CommonResult<CommonPage<CmsUserOpenCourseRelationDto>> listByPageQuery(
             CmsUserOpenCourseRelationQuery userOpenCourseRelationQuery,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -52,6 +53,15 @@ public class CmsUserOpenCourseRelationController {
         List<CmsUserOpenCourseRelationDto> userOpenCourseRelationDtoList =
                 userOpenCourseRelationService.listByPageQuery(userOpenCourseRelationQuery, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(userOpenCourseRelationDtoList));
+    }
+
+    @ApiOperation("获取用户[个人]选课信息")
+    @RequestMapping(value = "/list/student/simple", method = RequestMethod.GET)
+    //@PreAuthorize("hasAuthority('cms:user-opencourse-relation:list:student:simple')")
+    public CommonResult<List<CmsUserOpenCourseRelationDto>> listUserOpenCourse(){
+        CmsUserOpenCourseRelationQuery userOpenCourseRelationQuery = new CmsUserOpenCourseRelationQuery();
+        userOpenCourseRelationQuery.setUsername(SecurityUserHelper.getLoginUserName());
+        return CommonResult.success(userOpenCourseRelationService.listByQuery(userOpenCourseRelationQuery));
     }
 
     @ApiOperation("学生选课")
