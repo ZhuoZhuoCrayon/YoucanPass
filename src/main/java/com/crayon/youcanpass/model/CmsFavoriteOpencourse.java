@@ -3,7 +3,7 @@ package com.crayon.youcanpass.model;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
-public class CmsFavoriteCourse implements Serializable {
+public class CmsFavoriteOpencourse implements Serializable {
     @ApiModelProperty(value = "收藏id")
     private Long id;
 

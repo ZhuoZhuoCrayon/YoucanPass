@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.crayon.youcanpass.mapper.CmsFavoriteCourseMapper">
-  <resultMap id="BaseResultMap" type="com.crayon.youcanpass.model.CmsFavoriteCourse">
+<mapper namespace="com.crayon.youcanpass.mapper.CmsFavoriteOpencourseMapper">
+  <resultMap id="BaseResultMap" type="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="opencourse_id" jdbcType="BIGINT" property="opencourseId" />
     <result column="semester_id" jdbcType="BIGINT" property="semesterId" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.crayon.youcanpass.model.CmsFavoriteCourse">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
     <result column="note" jdbcType="LONGVARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -74,7 +74,7 @@
   <sql id="Blob_Column_List">
     note
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourseExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourseExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -82,7 +82,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from cms_favorite_course
+    from cms_favorite_opencourse
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,13 +90,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourseExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cms_favorite_course
+    from cms_favorite_opencourse
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,33 +109,33 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from cms_favorite_course
+    from cms_favorite_opencourse
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from cms_favorite_course
+    delete from cms_favorite_opencourse
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourseExample">
-    delete from cms_favorite_course
+  <delete id="deleteByExample" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourseExample">
+    delete from cms_favorite_opencourse
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourse">
+  <insert id="insert" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cms_favorite_course (user_id, opencourse_id, semester_id, 
+    insert into cms_favorite_opencourse (user_id, opencourse_id, semester_id, 
       note)
     values (#{userId,jdbcType=BIGINT}, #{opencourseId,jdbcType=BIGINT}, #{semesterId,jdbcType=BIGINT}, 
       #{note,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourse">
+  <insert id="insertSelective" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cms_favorite_course
+    insert into cms_favorite_opencourse
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
@@ -165,14 +165,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourseExample" resultType="java.lang.Integer">
-    select count(*) from cms_favorite_course
+  <select id="countByExample" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourseExample" resultType="java.lang.Integer">
+    select count(*) from cms_favorite_opencourse
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cms_favorite_course
+    update cms_favorite_opencourse
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -195,7 +195,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update cms_favorite_course
+    update cms_favorite_opencourse
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       opencourse_id = #{record.opencourseId,jdbcType=BIGINT},
@@ -206,7 +206,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cms_favorite_course
+    update cms_favorite_opencourse
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       opencourse_id = #{record.opencourseId,jdbcType=BIGINT},
@@ -215,8 +215,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourse">
-    update cms_favorite_course
+  <update id="updateByPrimaryKeySelective" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
+    update cms_favorite_opencourse
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
@@ -233,16 +233,16 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourse">
-    update cms_favorite_course
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
+    update cms_favorite_opencourse
     set user_id = #{userId,jdbcType=BIGINT},
       opencourse_id = #{opencourseId,jdbcType=BIGINT},
       semester_id = #{semesterId,jdbcType=BIGINT},
       note = #{note,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.crayon.youcanpass.model.CmsFavoriteCourse">
-    update cms_favorite_course
+  <update id="updateByPrimaryKey" parameterType="com.crayon.youcanpass.model.CmsFavoriteOpencourse">
+    update cms_favorite_opencourse
     set user_id = #{userId,jdbcType=BIGINT},
       opencourse_id = #{opencourseId,jdbcType=BIGINT},
       semester_id = #{semesterId,jdbcType=BIGINT}

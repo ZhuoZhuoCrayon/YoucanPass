@@ -3,14 +3,14 @@ package com.crayon.youcanpass.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CmsFavoriteCourseExample {
+public class CmsFavoriteOpencourseExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public CmsFavoriteCourseExample() {
+    public CmsFavoriteOpencourseExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
