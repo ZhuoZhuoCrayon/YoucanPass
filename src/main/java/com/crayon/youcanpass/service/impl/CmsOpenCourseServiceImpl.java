@@ -73,6 +73,20 @@ public class CmsOpenCourseServiceImpl implements CmsOpenCourseService {
         checkParam(openCourseForUserParam);
         //获取用户id
         Long userId =  umsUserService.getUserByUserName(SecurityUserHelper.getLoginUserName()).getId();
+
+        //检查是否重复开课
+        CmsOpencourseExample opencourseExample = new CmsOpencourseExample();
+        opencourseExample.createCriteria()
+                .andStatusNotEqualTo(CmsOpenCourseConstant.FAILED_AUDIT)
+                .andUserIdEqualTo(userId)
+                .andCourseIdEqualTo(openCourseForUserParam.getCourseId())
+                .andSemesterIdEqualTo(openCourseForUserParam.getSemesterId());
+        List<CmsOpencourse> opencourseList = opencourseMapper.selectByExample(opencourseExample);
+
+        if(opencourseList.size() > 0){
+            throw ServiceException.failed("不能重复开课");
+        }
+
         CmsOpencourse opencourse = new CmsOpencourse();
         BeanUtils.copyProperties(openCourseForUserParam, opencourse);
         opencourse.setUserId(userId);       //设置用户
