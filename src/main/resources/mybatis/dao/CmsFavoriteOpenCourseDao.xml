@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crayon.youcanpass.dao.CmsFavoriteOpenCourseDao">
+    <resultMap id="CmsFavoriteOpenCourseDto" type="com.crayon.youcanpass.dto.CmsFavoriteOpenCourseDto">
+        <id column="id" property="id"/>
+        <result column="userId" property="userId" />
+        <result column="opencourseId" property="opencourseId" />
+        <result column="semesterId" property="semesterId" />
+        <result column="note" property="note"/>
+        <result column="realName" property="realName"/>
+        <result column="courseName" property="courseName"/>
+        <result column="selectLimit" property="selectLimit"/>
+        <result column="selectCount" property="selectCount"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="list" resultMap="CmsFavoriteOpenCourseDto">
+        select
+        cfo.id id,
+        cfo.user_id userId,
+        cfo.opencourse_id opencourseId,
+        cfo.semester_id semesterId,
+        cfo.note note,
+        uu.real_name realName,
+        cc.name courseName,
+        co.select_limit selectLimit,
+        co.select_count selectCount,
+        co.status status
+        from cms_favorite_opencourse cfo
+        left join cms_opencourse co on cfo.opencourse_id = co.id
+        left join ums_user uu on co.user_id = uu.id
+        left join cms_course cc on cc.id = co.course_id
+        where 1 = 1
+        <if test="userId != null">
+            and cfo.user_id = #{userId}
+        </if>
+        <if test="semesterId != null">
+            and cfo.semester_id = #{semesterId}
+        </if>
+    </select>
+</mapper>
