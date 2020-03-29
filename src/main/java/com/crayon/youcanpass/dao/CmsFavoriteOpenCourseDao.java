@@ -12,5 +12,5 @@ import java.util.List;
  * @Created by Crayon
  */
 public interface CmsFavoriteOpenCourseDao {
-    public List<CmsFavoriteOpenCourseDto> list(@Param("userId") Long userId, @Param("semesterId") Long semesterId);
+    List<CmsFavoriteOpenCourseDto> list(@Param("userId") Long userId, @Param("semesterId") Long semesterId);
 }
