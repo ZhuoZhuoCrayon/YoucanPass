@@ -148,8 +148,8 @@ create table cms_user_opencourse_relation
 ) engine = InnoDB
   charset = utf8 comment = '选课关系表';
 
-drop table if exists cms_favorite_course;
-create table cms_favorite_course
+drop table if exists cms_favorite_opencourse;
+create table cms_favorite_opencourse
 (
     id            bigint(20) auto_increment comment '收藏id',
     user_id       bigint(20) not null comment '用户id:关联ums_user',
@@ -209,9 +209,9 @@ create table sms_message
 (
     id          bigint(20) auto_increment comment '通知信息id:primary',
     user_id     bigint(20) not null comment '用户id:关联ums_user',
-    semester_id bigint(20) not null comment '学期信息id:关联ims_semester',
     commit_date datetime   not null default now() comment '发布日期',
     update_date datetime   not null default now() comment '修改日期',
+    title       text comment '标题',
     content     text comment '内容',
     status      int(1)     not null default 0 comment '状态:0->隐藏/1->发布/2-置顶',
     primary key (id)
