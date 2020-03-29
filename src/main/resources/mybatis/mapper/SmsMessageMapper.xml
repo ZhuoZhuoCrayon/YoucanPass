@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="com.crayon.youcanpass.model.SmsMessage">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="semester_id" jdbcType="BIGINT" property="semesterId" />
     <result column="commit_date" jdbcType="TIMESTAMP" property="commitDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.crayon.youcanpass.model.SmsMessage">
+    <result column="title" jdbcType="LONGVARCHAR" property="title" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -71,10 +71,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, semester_id, commit_date, update_date, status
+    id, user_id, commit_date, update_date, status
   </sql>
   <sql id="Blob_Column_List">
-    content
+    title, content
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.crayon.youcanpass.model.SmsMessageExample" resultMap="ResultMapWithBLOBs">
     select
@@ -128,11 +128,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into sms_message (user_id, semester_id, commit_date, 
-      update_date, status, content
+    insert into sms_message (user_id, commit_date, update_date, 
+      status, title, content
       )
-    values (#{userId,jdbcType=BIGINT}, #{semesterId,jdbcType=BIGINT}, #{commitDate,jdbcType=TIMESTAMP}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+    values (#{userId,jdbcType=BIGINT}, #{commitDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{title,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.crayon.youcanpass.model.SmsMessage">
@@ -144,9 +144,6 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="semesterId != null">
-        semester_id,
-      </if>
       <if test="commitDate != null">
         commit_date,
       </if>
@@ -156,6 +153,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="title != null">
+        title,
+      </if>
       <if test="content != null">
         content,
       </if>
@@ -163,9 +163,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="semesterId != null">
-        #{semesterId,jdbcType=BIGINT},
       </if>
       <if test="commitDate != null">
         #{commitDate,jdbcType=TIMESTAMP},
@@ -175,6 +172,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=LONGVARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -196,9 +196,6 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.semesterId != null">
-        semester_id = #{record.semesterId,jdbcType=BIGINT},
-      </if>
       <if test="record.commitDate != null">
         commit_date = #{record.commitDate,jdbcType=TIMESTAMP},
       </if>
@@ -207,6 +204,9 @@
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=LONGVARCHAR},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -220,10 +220,10 @@
     update sms_message
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      semester_id = #{record.semesterId,jdbcType=BIGINT},
       commit_date = #{record.commitDate,jdbcType=TIMESTAMP},
       update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=LONGVARCHAR},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -233,7 +233,6 @@
     update sms_message
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      semester_id = #{record.semesterId,jdbcType=BIGINT},
       commit_date = #{record.commitDate,jdbcType=TIMESTAMP},
       update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER}
@@ -247,9 +246,6 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="semesterId != null">
-        semester_id = #{semesterId,jdbcType=BIGINT},
-      </if>
       <if test="commitDate != null">
         commit_date = #{commitDate,jdbcType=TIMESTAMP},
       </if>
@@ -258,6 +254,9 @@
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=LONGVARCHAR},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -268,17 +267,16 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.crayon.youcanpass.model.SmsMessage">
     update sms_message
     set user_id = #{userId,jdbcType=BIGINT},
-      semester_id = #{semesterId,jdbcType=BIGINT},
       commit_date = #{commitDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
+      title = #{title,jdbcType=LONGVARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.crayon.youcanpass.model.SmsMessage">
     update sms_message
     set user_id = #{userId,jdbcType=BIGINT},
-      semester_id = #{semesterId,jdbcType=BIGINT},
       commit_date = #{commitDate,jdbcType=TIMESTAMP},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER}

@@ -11,9 +11,6 @@ public class SmsMessage implements Serializable {
     @ApiModelProperty(value = "用户id:关联ums_user")
     private Long userId;
 
-    @ApiModelProperty(value = "学期信息id:关联ims_semester")
-    private Long semesterId;
-
     @ApiModelProperty(value = "发布日期")
     private Date commitDate;
 
@@ -22,6 +19,9 @@ public class SmsMessage implements Serializable {
 
     @ApiModelProperty(value = "状态:0->隐藏/1->发布/2-置顶")
     private Integer status;
+
+    @ApiModelProperty(value = "标题")
+    private String title;
 
     @ApiModelProperty(value = "内容")
     private String content;
@@ -42,14 +42,6 @@ public class SmsMessage implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(Long semesterId) {
-        this.semesterId = semesterId;
     }
 
     public Date getCommitDate() {
@@ -76,6 +68,14 @@ public class SmsMessage implements Serializable {
         this.status = status;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getContent() {
         return content;
     }
@@ -92,10 +92,10 @@ public class SmsMessage implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
-        sb.append(", semesterId=").append(semesterId);
         sb.append(", commitDate=").append(commitDate);
         sb.append(", updateDate=").append(updateDate);
         sb.append(", status=").append(status);
+        sb.append(", title=").append(title);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
